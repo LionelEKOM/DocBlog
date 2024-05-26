@@ -2,11 +2,14 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template import loader
 from datetime import datetime
+from django.urls import reverse, reverse_lazy
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView
 
 from django.views import View
+from requests import request
 from blogModels.forms import BlogPostForm
 from blogModels.models import BlogPost
 
@@ -37,12 +40,36 @@ class BlogDetailView(DetailView):
     model = BlogPost
     template_name='blogdetail.html'
 
+class BlogPostCreateView(CreateView):
+    model = BlogPost
+    template_name = "blogform.html"
+    success_url = reverse_lazy("blog-list")
+    # fields = [
+    #         "title",
+    #         "content",
+    #     ]
+    form_class = BlogPostForm
+    
+    # def get_success_url(self):
+    #     return reverse("blog-list")
+    
+    def form_valid(self, form):
+        if self.request.user.is_authenticated:
+            form.instance.author = self.request.user
+        form.instance.published = True
+        return super().form_valid(form)
+    
+
+
 def creat(request):
     if request.method == "POST":
         form = BlogPostForm(request.POST)
         if form.is_valid:
+            if request.user.is_authenticated:
+                form.instance.author = request.user
             form.save()
-            return HttpResponseRedirect(request.path)
+            # return HttpResponseRedirect(request.path)
+            return HttpResponseRedirect(reverse('blog-list'))
     else:
         init_values = {}
         if request.user.is_authenticated:

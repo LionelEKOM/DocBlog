@@ -7,11 +7,12 @@ class BlogPostForm(forms.ModelForm):
         #Pour exclure certains champs
         #exclude = ('title',)
         fields = [
-            "category",
+            # "category",
             "title",
-            "author",
-            "date",
-            "description",
+            "content",
+            # "author",
+            # "date",
+            "published",
         ]
         labels = {
             "title" : "Titre",
