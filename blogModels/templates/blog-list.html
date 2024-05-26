@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>blog-list</title>
+</head>
+<body>
+    <h1>Liste des Blogs</h1>
+    <a href="#">Ajouter un blog</a>
+    <hr>
+    <h3>Blogs</h3>
+    <ul>
+        {# {% for blog in object_list %} #}
+        {% for blog in Blogs %}
+        <li>
+            {{ blog.title }} - {{ blog.date|date }} 
+            <p>{{ blog.content | truncatewords:5 }}</p>
+        </li>
+        {% empty %}
+        <li>No articles yet.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

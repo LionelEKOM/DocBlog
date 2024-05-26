@@ -3,9 +3,11 @@ from django.shortcuts import render
 from django.template import loader
 from datetime import datetime
 from django.views.generic.base import TemplateView
+from django.views.generic.list import ListView
 
 from django.views import View
 from blogModels.forms import BlogPostForm
+from blogModels.models import BlogPost
 
 # Create your views here.
 def index(request):
@@ -25,6 +27,10 @@ class HomeView(TemplateView):
         context["title"] = "Club d'elite"
         return context
     
+class BlogIndexView(ListView):
+    model = BlogPost
+    context_object_name = 'Blogs'
+    template_name='blog-list.html'
 
 def creat(request):
     if request.method == "POST":
