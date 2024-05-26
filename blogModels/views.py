@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.template import loader
 from datetime import datetime
 from django.views.generic.base import TemplateView
+from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
 from django.views import View
@@ -31,6 +32,10 @@ class BlogIndexView(ListView):
     model = BlogPost
     context_object_name = 'Blogs'
     template_name='blog-list.html'
+    
+class BlogDetailView(DetailView):
+    model = BlogPost
+    template_name='blogdetail.html'
 
 def creat(request):
     if request.method == "POST":
