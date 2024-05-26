@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog_form</title>
+    <title>Blog_confirm_delete.html</title>
 </head>
 <body>
-    <h1>Add a new article</h1>
-    <hr>
-        
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="{{ send }}">
+        <p>Are you sure you want to delete "{{ object }}"?</p>
+        <input type="submit" value="Confirm">
     </form>
 </body>
 </html>

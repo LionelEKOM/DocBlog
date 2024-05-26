@@ -6,7 +6,8 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+
 
 from django.views import View
 from requests import request
@@ -58,8 +59,28 @@ class BlogPostCreateView(CreateView):
             form.instance.author = self.request.user
         form.instance.published = True
         return super().form_valid(form)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["send"] = "Create"
+        return context
     
+    
+class BlogPostUpdateView(UpdateView):
+        model = BlogPost
+        template_name = "blogform.html"
+        form_class = BlogPostForm
+        success_url = reverse_lazy("blog-list")
+        
+        def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            context["send"] = "Modifier"
+            return context
 
+class BlogPostDeleteView(DeleteView):
+    model = BlogPost
+    template_name = "blogdelete.html"
+    success_url = reverse_lazy('blog-list')
+ 
 
 def creat(request):
     if request.method == "POST":

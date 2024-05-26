@@ -7,6 +7,8 @@
 </head>
 <body>
     <a href="/blog/list/">Retour au sommaire</a>
+    <a href="{% url 'blog-detail-edit'  slug=object.slug %}">editer</a>
+    <a href="{% url 'blog-detail-delete'  slug=object.slug %}">delete</a>
     <h1>Blog_detail</h1>
     <h1>{{ object.title }}</h1>
     <p>{{ object.content }}</p>
