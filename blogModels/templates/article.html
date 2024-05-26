@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}create new article{% endblock %}</title>
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+</head>
+<body>
+    <h1>Creer un article</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {# {% bootstrap_form form %} #}
+        <input class="btn btn-primary" type="submit" value="Envoyer">
+    </form>
+</body>
+</html>
